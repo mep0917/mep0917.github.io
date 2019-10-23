@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>python中的设计模式 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Blog">
+  
+  <meta name="description" content="Python设计模式 设计模式的定义:为了解决面向对象系统中重要和重复的设计封装在一起的一种代码实现框架,可以使得代码更加易于扩展和调用 四个基本要素:模式名称,问题,解决方案,效果 六大原则: 　　1.开闭原则:一个软件实体,如类,模块和函数应该对扩展开发,对修改关闭.既软件实体应尽量在不修改原有代码的情况下进行扩展. 1234567892.里氏替换原则:所有引用父类的方法必须能透明的使用其子类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python中的设计模式">
+<meta property="og:url" content="http://yoursite.com/2018/02/18/My-blog-54/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Python设计模式 设计模式的定义:为了解决面向对象系统中重要和重复的设计封装在一起的一种代码实现框架,可以使得代码更加易于扩展和调用 四个基本要素:模式名称,问题,解决方案,效果 六大原则: 　　1.开闭原则:一个软件实体,如类,模块和函数应该对扩展开发,对修改关闭.既软件实体应尽量在不修改原有代码的情况下进行扩展. 1234567892.里氏替换原则:所有引用父类的方法必须能透明的使用其子类">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-22T12:39:43.384Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python中的设计模式">
+<meta name="twitter:description" content="Python设计模式 设计模式的定义:为了解决面向对象系统中重要和重复的设计封装在一起的一种代码实现框架,可以使得代码更加易于扩展和调用 四个基本要素:模式名称,问题,解决方案,效果 六大原则: 　　1.开闭原则:一个软件实体,如类,模块和函数应该对扩展开发,对修改关闭.既软件实体应尽量在不修改原有代码的情况下进行扩展. 1234567892.里氏替换原则:所有引用父类的方法必须能透明的使用其子类">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Caleb的技术博客</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Caleb的技术博客
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个专注 WEB 开发的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="MinHow" target="_blank" href="//minhow.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/wongminho">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/WongMinHo">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/huangminhow">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-My-blog-54" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      python中的设计模式
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2018-02-18
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>Python设计模式 设计模式的定义:为了解决面向对象系统中重要和重复的设计封装在一起的一种代码实现框架,可以使得代码更加易于扩展和调用</p>
+<p>四个基本要素:模式名称,问题,解决方案,效果</p>
+<p>六大原则:</p>
+<p>　　1.开闭原则:一个软件实体,如类,模块和函数应该对扩展开发,对修改关闭.既软件实体应尽量在不修改原有代码的情况下进行扩展.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">2.里氏替换原则:所有引用父类的方法必须能透明的使用其子类的对象</span><br><span class="line"></span><br><span class="line">3.依赖倒置原则:高层模块不应该依赖底层模块,二者都应该依赖其抽象,抽象不应该依赖于细节,细节应该依赖抽象,换而言之,要针对接口编程而不是针对实现编程</span><br><span class="line"></span><br><span class="line">4.接口隔离原则:使用多个专门的接口,而不是使用单一的总接口,即客户端不应该依赖那些并不需要的接口</span><br><span class="line"></span><br><span class="line">5.迪米特法则:一个软件实体应该尽可能的少与其他实体相互作用</span><br><span class="line"></span><br><span class="line">6.单一直责原则:不要存在多个导致类变更的原因.即一个类只负责一项职责</span><br></pre></td></tr></table></figure>
+
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>定义:一种特殊的类,声明了若干方法,要求继承该接口的类必须实现这种方法</p>
+<p>作用:限制继承接口的类的方法的名称及调用方式,隐藏了类的内部实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">from abc import ABCMeta,abstractmethod</span><br><span class="line"></span><br><span class="line">class Payment(metaclass=ABCMeta):</span><br><span class="line">    @abstractmethod#定义抽象方法的关键字</span><br><span class="line">    def pay(self,money):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">    # @abstractmethod</span><br><span class="line">    # def pay(self,money):</span><br><span class="line">    #     raise NotImplementedError</span><br><span class="line"></span><br><span class="line">class AiliPay(Payment):</span><br><span class="line">    #子类继承接口,必须实现接口中定义的抽象方法,否则不能实例化对象</span><br><span class="line">    def pay(self,money):</span><br><span class="line">        print(&apos;使用支付宝支付%s元&apos;%money)</span><br><span class="line"></span><br><span class="line">class ApplePay(Payment):</span><br><span class="line">    def pay(self,money):</span><br><span class="line">        print(&apos;使用苹果支付支付%s元&apos;%money)</span><br></pre></td></tr></table></figure>
+
+<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><p>定义:保证一个类只有一个实例,并提供一个访问它的全局访问点</p>
+<p>适用场景:当一个类只能有一个实例而客户可以从一个众所周知的访问点访问它时</p>
+<p>优点:对唯一实例的受控访问,相当于全局变量,但是又可以防止此变量被篡改</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class Singleton(object):</span><br><span class="line">    #如果该类已经有了一个实例则直接返回,否则创建一个全局唯一的实例</span><br><span class="line">    def __new__(cls, *args, **kwargs):</span><br><span class="line">        if not hasattr(cls,&apos;_instance&apos;):</span><br><span class="line">            cls._instance = super(Singleton,cls).__new__(cls)</span><br><span class="line">        return cls._instance</span><br><span class="line"></span><br><span class="line">class MyClass(Singleton):</span><br><span class="line">    def __init__(self,name):</span><br><span class="line">        if name:</span><br><span class="line">            self.name = name</span><br><span class="line"></span><br><span class="line">a = MyClass(&apos;a&apos;)</span><br><span class="line">print(a)</span><br><span class="line">print(a.name)</span><br><span class="line"></span><br><span class="line">b = MyClass(&apos;b&apos;)</span><br><span class="line">print(b)</span><br><span class="line">print(b.name)</span><br><span class="line"></span><br><span class="line">print(a)</span><br><span class="line">print(a.name)</span><br></pre></td></tr></table></figure>
+
+<h3 id="工厂模式（celery）"><a href="#工厂模式（celery）" class="headerlink" title="工厂模式（celery）"></a>工厂模式（celery）</h3><p>定义:不直接向客户暴露对象创建的实现细节,而是通过一个工厂类来负责创建产品类的实例</p>
+<p>角色:工厂角色,抽象产品角色,具体产品角色</p>
+<p>优点:隐藏了对象创建代码的细节,客户端不需要修改代码</p>
+<p>缺点:违反了单一职责原则,将创建逻辑集中到一个工厂里面,当要添加新产品时,违背了开闭原则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">from abc import ABCMeta,abstractmethod</span><br><span class="line"></span><br><span class="line">class Payment(metaclass=ABCMeta):</span><br><span class="line">    #抽象产品角色</span><br><span class="line">    @abstractmethod</span><br><span class="line">    def pay(self,money):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class AiliPay(Payment):</span><br><span class="line">    #具体产品角色</span><br><span class="line">    def __init__(self,enable_yuebao=False):</span><br><span class="line">        self.enable_yuebao = enable_yuebao</span><br><span class="line"></span><br><span class="line">    def pay(self,money):</span><br><span class="line">        if self.enable_yuebao:</span><br><span class="line">            print(&apos;使用余额宝支付%s元&apos;%money)</span><br><span class="line">        else:</span><br><span class="line">            print(&apos;使用支付宝支付%s元&apos;%money)</span><br><span class="line"></span><br><span class="line">class ApplePay(Payment):</span><br><span class="line">    # 具体产品角色</span><br><span class="line">    def pay(self,money):</span><br><span class="line">        print(&apos;使用苹果支付支付%s元&apos;%money)</span><br><span class="line"></span><br><span class="line">class PaymentFactory:</span><br><span class="line">    #工厂角色</span><br><span class="line">    def create_payment(self,method):</span><br><span class="line">        if method == &apos;alipay&apos;:</span><br><span class="line">            return AiliPay()</span><br><span class="line">        elif method == &apos;yuebao&apos;:</span><br><span class="line">            return AiliPay(True)</span><br><span class="line">        elif method == &apos;applepay&apos;:</span><br><span class="line">            return ApplePay()</span><br><span class="line">        else:</span><br><span class="line">            return NameError</span><br><span class="line"></span><br><span class="line">p = PaymentFactory()</span><br><span class="line">f = p.create_payment(&apos;yuebao&apos;)</span><br><span class="line">f.pay(100)</span><br></pre></td></tr></table></figure>
+
+<h3 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h3><p>定义:定义对象间的一种一对多的依赖关系,当一个对象的状态发生改变时,所有依赖它的对象都会得到通知并被自动更新.观察者模式又称为’发布订阅’模式</p>
+<p>角色:抽象主题,具体主题(发布者),抽象观察者,具体观察者(订阅者)</p>
+<p>适用场景:当一个抽象模型有两个方面,其中一个方面依赖于另一个方面.将两者封装在独立的对象中以使它们各自独立的改变和复用</p>
+<p>当一个对象的改变需要同时改变其他对象,而且不知道具体有多少对象以待改变</p>
+<p>当一个对象必须通知其他对象,而又不知道其他对象是谁,即这些对象之间是解耦的</p>
+<p>优点:目标和观察者之间的耦合最小,支持广播通信</p>
+<p>缺点:多个观察者之间互不知道对方的存在,因此一个观察者对主题的修改可能造成错误的更新</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">from abc import ABCMeta, abstractmethod</span><br><span class="line"></span><br><span class="line">#抽象主题</span><br><span class="line">class Oberserver(metaclass=ABCMeta):</span><br><span class="line">    @abstractmethod</span><br><span class="line">    def update(self):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line">#具体主题</span><br><span class="line">class Notice:</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.observers = []</span><br><span class="line"></span><br><span class="line">    def attach(self,obs):</span><br><span class="line">        self.observers.append(obs)</span><br><span class="line"></span><br><span class="line">    def detach(self,obs):</span><br><span class="line">        self.observers.remove(obs)</span><br><span class="line"></span><br><span class="line">    def notify(self):</span><br><span class="line">        for obj in self.observers:</span><br><span class="line">            obj.update(self)</span><br><span class="line"></span><br><span class="line">#抽象观察者</span><br><span class="line">class ManagerNotice(Notice):</span><br><span class="line">    def __init__(self,company_info=None):</span><br><span class="line">        super().__init__()</span><br><span class="line">        self.__company_info = company_info</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def company_info(self):</span><br><span class="line">        return self.__company_info</span><br><span class="line"></span><br><span class="line">    @company_info.setter</span><br><span class="line">    def company_info(self,info):</span><br><span class="line">        self.__company_info = info</span><br><span class="line">        self.notify()</span><br><span class="line"></span><br><span class="line">#具体观察者</span><br><span class="line">class Manager(Oberserver):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.company_info = None</span><br><span class="line">    def update(self,noti):</span><br><span class="line">        self.company_info = noti.company_info</span><br><span class="line"></span><br><span class="line">#消息订阅-发送</span><br><span class="line">notice = ManagerNotice()</span><br><span class="line"></span><br><span class="line">alex=Manager()</span><br><span class="line">tony=Manager()</span><br><span class="line"></span><br><span class="line">notice.attach(alex)</span><br><span class="line">notice.attach(tony)</span><br><span class="line">notice.company_info=&quot;公司运行良好&quot;</span><br><span class="line">print(alex.company_info)</span><br><span class="line">print(tony.company_info)</span><br><span class="line"></span><br><span class="line">notice.company_info=&quot;公司将要上市&quot;</span><br><span class="line">print(alex.company_info)</span><br><span class="line">print(tony.company_info)</span><br><span class="line"></span><br><span class="line">notice.detach(tony)</span><br><span class="line">notice.company_info=&quot;公司要破产了，赶快跑路&quot;</span><br><span class="line">print(alex.company_info)</span><br><span class="line">print(tony.company_info)</span><br></pre></td></tr></table></figure>
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月22日 20:39</p>
+        <p>原始链接： <a class="post-url" href="/2018/02/18/My-blog-54/" title="python中的设计模式">http://yoursite.com/2018/02/18/My-blog-54/</a></p>
+        <footer>
+            <a href="http://yoursite.com">
+                <img src="/images/logo.png" alt="John Doe">
+                John Doe
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/02/18/My-blog-54/&title=《python中的设计模式》 — Hexo&pic=http://yoursite.comimages/logo.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/02/18/My-blog-54/&title=《python中的设计模式》 — Hexo&source=" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/02/18/My-blog-54/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《python中的设计模式》 — Hexo&url=http://yoursite.com/2018/02/18/My-blog-54/&via=http://yoursite.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/02/18/My-blog-54/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2018/02/18/My-blog-54/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#接口"><span class="post-toc-text">接口</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#单例模式"><span class="post-toc-text">单例模式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#工厂模式（celery）"><span class="post-toc-text">工厂模式（celery）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#观察者模式"><span class="post-toc-text">观察者模式</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2018/03/11/My-blog-55/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          单元测试
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2018/02/03/My-blog-53/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">python中的高阶函数</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 John Doe<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://yoursite.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            
+        </div>
+        <div id="sidebar-menu-box-tags">
+            
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

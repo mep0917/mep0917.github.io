@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>python装饰器 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Blog">
+  
+  <meta name="description" content="什么是装饰器本质上，装饰器（decorator）就是一个返回函数的高阶函数。当我们想对已有程序进行功能扩展时，我们往往不会选择修改函数或者模块内部的源代码，这样是不科学也是不现实的（可以看一下开闭原则）。装饰器由此而来，它满足了以下3点原则： 不修改被装饰的函数的源代码不修改被装饰的函数的调用方式在满足1、2的情况下给程序增加额外的功能装饰器经常被用于有切面需求的场景，比如：插入日志、性能测试、事">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python装饰器">
+<meta property="og:url" content="http://yoursite.com/2016/11/18/My-blog-25/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="什么是装饰器本质上，装饰器（decorator）就是一个返回函数的高阶函数。当我们想对已有程序进行功能扩展时，我们往往不会选择修改函数或者模块内部的源代码，这样是不科学也是不现实的（可以看一下开闭原则）。装饰器由此而来，它满足了以下3点原则： 不修改被装饰的函数的源代码不修改被装饰的函数的调用方式在满足1、2的情况下给程序增加额外的功能装饰器经常被用于有切面需求的场景，比如：插入日志、性能测试、事">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-22T12:02:26.850Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python装饰器">
+<meta name="twitter:description" content="什么是装饰器本质上，装饰器（decorator）就是一个返回函数的高阶函数。当我们想对已有程序进行功能扩展时，我们往往不会选择修改函数或者模块内部的源代码，这样是不科学也是不现实的（可以看一下开闭原则）。装饰器由此而来，它满足了以下3点原则： 不修改被装饰的函数的源代码不修改被装饰的函数的调用方式在满足1、2的情况下给程序增加额外的功能装饰器经常被用于有切面需求的场景，比如：插入日志、性能测试、事">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Caleb的技术博客</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Caleb的技术博客
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个专注 WEB 开发的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="MinHow" target="_blank" href="//minhow.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/wongminho">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/WongMinHo">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/huangminhow">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-My-blog-25" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      python装饰器
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2016-11-18
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>什么是装饰器<br>本质上，装饰器（decorator）就是一个返回函数的高阶函数。当我们想对已有程序进行功能扩展时，我们往往不会选择修改函数或者模块内部的源代码，这样是不科学也是不现实的（可以看一下开闭原则）。装饰器由此而来，它满足了以下3点原则：</p>
+<p>不修改被装饰的函数的源代码<br>不修改被装饰的函数的调用方式<br>在满足1、2的情况下给程序增加额外的功能<br>装饰器经常被用于有切面需求的场景，比如：插入日志、性能测试、事务处理、缓存、权限校验等。</p>
+<p>装饰器的使用<br>上面对装饰器简单介绍了一下，接下来我们来看看装饰器具体长什么样，以及怎么去装饰函数。</p>
+<p>先看一个简单的装饰器：</p>
+<h1 id="装饰器函数，-接受函数名作为参数"><a href="#装饰器函数，-接受函数名作为参数" class="headerlink" title="装饰器函数， 接受函数名作为参数"></a>装饰器函数， 接受函数名作为参数</h1><p>def decorator(func):<br>    def wrapper():<br>        # 提示：wrapper函数中的print()操作只是最简单的示例，根据不同的需求可以换成更有实际意义的操作。<br>        print(‘before doing something’)<br>        func()   # 在包装函数中调用被装饰函数<br>        print(‘something finished’)<br>    return wrapper</p>
+<p>@decorator<br>def something():<br>    print(‘doing something’)</p>
+<p>print(something.<strong>name</strong>)<br>something()<br>‘’’输出：<br>        wrapper<br>        before doing something<br>        doing something<br>        something finished<br>‘’’</p>
+<p>看完代码，我们来说明一下装饰器是怎么装饰函数的：</p>
+<h1 id="方式一：-使用语法糖，在被修饰函数定义前加上-装饰器的名字"><a href="#方式一：-使用语法糖，在被修饰函数定义前加上-装饰器的名字" class="headerlink" title="方式一： 使用语法糖，在被修饰函数定义前加上 @ + 装饰器的名字"></a>方式一： 使用语法糖，在被修饰函数定义前加上 @ + 装饰器的名字</h1><p>@decorator<br>def func():<br>    pass</p>
+<h1 id="方式二：-手动将被修饰函数的名字作为参数传入装饰器中"><a href="#方式二：-手动将被修饰函数的名字作为参数传入装饰器中" class="headerlink" title="方式二： 手动将被修饰函数的名字作为参数传入装饰器中"></a>方式二： 手动将被修饰函数的名字作为参数传入装饰器中</h1><p>func = decorator(func) </p>
+<p>这两种方式的实际效果是一样的，但是方式一明显更为简捷。</p>
+<p>要注意的是，因为返回的那个wrapper()函数名就是wrapper，所以我们需要把原始函数的<strong>name</strong>等属性复制到wrapper()函数中，否则，有些依赖函数签名的代码执行就会出错。Python内置的functools.wraps方法就能替我们解决这个问题，只需在定义wrapper()的前面加上@functools.wraps(func)即可。下面的示例程序都将使用wraps方法。</p>
+<p>接下来实现一个更实用的装饰器，它可以修饰带参数且有返回值的函数：</p>
+<p>import functools</p>
+<p>def decorator(func):<br>    @functools.wraps(func)<br>    def wrapper(<em>args, *</em>kwargs):       # 使用可变参数，更具扩展性<br>        print(‘before doing something’)<br>        ret = func(<em>args, *</em>kwargs)     # 使用变量ret存放被装饰函数的返回<br>        print(‘something finished’)<br>        return ret                      # 包装函数再返回ret，实现返回的传递<br>    return wrapper</p>
+<p>@decorator<br>def get_plus(a, b):            # 返回两数之和<br>    print(‘call get_plus’)<br>    return a + b</p>
+<p>@decorator<br>def get_sum(<em>args, *</em>kwargs):  # 返回n个数的和<br>    print(‘call get_sum’)<br>    return sum(args)</p>
+<p>print(get_plus.<strong>name</strong>)<br>print(get_sum.<strong>name</strong>)<br>sum1 = get_plus(1, 3)<br>sum2 = get_sum(2, 3, 4)<br>print(sum1, sum2)</p>
+<p>‘’’输出：<br>        get_plus<br>        get_sum<br>        before doing something<br>        call get_plus<br>        something finished<br>        before doing something<br>        call get_sum<br>        something finished<br>        4   9<br>‘’’</p>
+<p>可以看到，为wrapper函数添加了可变参数后，装饰器能修饰有固定参数的get_plus函数，也能修饰参数不定的get_sum函数，而且在使用了functools.wraps方法后，被修饰函数的<strong>name</strong>等属性也一并复制了过去。</p>
+<p>如果针对不同的函数，我们需要装饰器来区别对待，那么可以这样做：</p>
+<p>import functools</p>
+<p>def decorator(param):                 # 装饰器接受参数param<br>    def outer_wrapper(func):<br>        @functools.wraps(func)<br>        def wrapper(<em>args, *</em>kwargs):<br>            if param == ‘task1’:      # 根据参数param判断当前修饰的是哪个函数<br>                func(<em>args, *</em>kwargs)<br>            elif param == ‘task2’:<br>                func(<em>args, *</em>kwargs)<br>            print(param,”is finished.”)<br>        return wrapper<br>    return outer_wrapper</p>
+<p>@decorator(param=’task1’)<br>def task1():<br>    print(“doing task1 right now..”)</p>
+<p>@decorator(param=’task2’)<br>def task2():<br>    print(“doing task2 right now..”)</p>
+<p>print(task1.<strong>name</strong>, task2.<strong>name</strong>)<br>task1()<br>task2()<br>‘’’输出：<br>        task1   task2<br>        doing task1 right now..<br>        task1 is finished.<br>        doing task2 right now..<br>        task2 is finished.<br>‘’’</p>
+<p>分析一下给装饰器传参的操作：</p>
+<p>@decorator(param = arg)    # 1<br>def func(<em>args, *</em>kwargs):<br>    pass</p>
+<h1 id="1处的语句与-2处的语句是等价的"><a href="#1处的语句与-2处的语句是等价的" class="headerlink" title="#1处的语句与#2处的语句是等价的"></a>#1处的语句与#2处的语句是等价的</h1><h1 id="为了容易理解，我把-2右边的逐步化简如下："><a href="#为了容易理解，我把-2右边的逐步化简如下：" class="headerlink" title="为了容易理解，我把#2右边的逐步化简如下："></a>为了容易理解，我把#2右边的逐步化简如下：</h1><p>func = decorator(arg)(func)   # 2<br>     = outer_wrapper(func)    # 注意以下两句直接执行是会报错的，此处只是为了方便理解<br>     = wrapper(<em>args, *</em>kwargs)</p>
+<p>通过上面的代码我们可以看到，实际上func经过多层的嵌套最终还是被“包”在最里层的wrapper里面，传递给装饰器的参数param只是为了wrapper可以对不同的函数有区别地“包装”，这也算是对装饰器功能的进一步扩展。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月22日 20:02</p>
+        <p>原始链接： <a class="post-url" href="/2016/11/18/My-blog-25/" title="python装饰器">http://yoursite.com/2016/11/18/My-blog-25/</a></p>
+        <footer>
+            <a href="http://yoursite.com">
+                <img src="/images/logo.png" alt="John Doe">
+                John Doe
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2016/11/18/My-blog-25/&title=《python装饰器》 — Hexo&pic=http://yoursite.comimages/logo.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2016/11/18/My-blog-25/&title=《python装饰器》 — Hexo&source=" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/11/18/My-blog-25/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《python装饰器》 — Hexo&url=http://yoursite.com/2016/11/18/My-blog-25/&via=http://yoursite.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2016/11/18/My-blog-25/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2016/11/18/My-blog-25/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#装饰器函数，-接受函数名作为参数"><span class="post-toc-text">装饰器函数， 接受函数名作为参数</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#方式一：-使用语法糖，在被修饰函数定义前加上-装饰器的名字"><span class="post-toc-text">方式一： 使用语法糖，在被修饰函数定义前加上 @ + 装饰器的名字</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#方式二：-手动将被修饰函数的名字作为参数传入装饰器中"><span class="post-toc-text">方式二： 手动将被修饰函数的名字作为参数传入装饰器中</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1处的语句与-2处的语句是等价的"><span class="post-toc-text">#1处的语句与#2处的语句是等价的</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#为了容易理解，我把-2右边的逐步化简如下："><span class="post-toc-text">为了容易理解，我把#2右边的逐步化简如下：</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2016/11/22/My-blog-26/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          Python数据类型有哪些？
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2016/11/01/My-blog-24/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">python中的闭包</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 John Doe<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://yoursite.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            
+        </div>
+        <div id="sidebar-menu-box-tags">
+            
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

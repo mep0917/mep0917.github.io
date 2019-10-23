@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Python的内存管理(毛毛随笔) | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Blog">
+  
+  <meta name="description" content="Python对内存的管理从三个方面来说：1.对象的引用计数机制、2.垃圾回收机制、 3.内存池机制 一 对象的引用机制Pyhton的内部使用引用计数，来保持内存中的对象，所有对象都有引用计数。 (1) 引用计数增加：  一个对象分配一个新名称 将其放入一个容器中(列表、元素或字典)  (2) 引用减少的情况  使用del语句将对象的别名显式的销毁 引用被重新赋值获取应用对象：通过sys.getre">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python的内存管理(毛毛随笔)">
+<meta property="og:url" content="http://yoursite.com/2015/12/23/My-blog-05/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Python对内存的管理从三个方面来说：1.对象的引用计数机制、2.垃圾回收机制、 3.内存池机制 一 对象的引用机制Pyhton的内部使用引用计数，来保持内存中的对象，所有对象都有引用计数。 (1) 引用计数增加：  一个对象分配一个新名称 将其放入一个容器中(列表、元素或字典)  (2) 引用减少的情况  使用del语句将对象的别名显式的销毁 引用被重新赋值获取应用对象：通过sys.getre">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-22T08:00:33.508Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python的内存管理(毛毛随笔)">
+<meta name="twitter:description" content="Python对内存的管理从三个方面来说：1.对象的引用计数机制、2.垃圾回收机制、 3.内存池机制 一 对象的引用机制Pyhton的内部使用引用计数，来保持内存中的对象，所有对象都有引用计数。 (1) 引用计数增加：  一个对象分配一个新名称 将其放入一个容器中(列表、元素或字典)  (2) 引用减少的情况  使用del语句将对象的别名显式的销毁 引用被重新赋值获取应用对象：通过sys.getre">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Caleb的技术博客</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Caleb的技术博客
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个专注 WEB 开发的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="MinHow" target="_blank" href="//minhow.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/wongminho">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/WongMinHo">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/huangminhow">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-My-blog-05" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      Python的内存管理(毛毛随笔)
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2015-12-23
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>Python对内存的管理从三个方面来说：1.对象的引用计数机制、2.垃圾回收机制、 3.内存池机制</p>
+<h3 id="一-对象的引用机制"><a href="#一-对象的引用机制" class="headerlink" title="一 对象的引用机制"></a>一 对象的引用机制</h3><p>Pyhton的内部使用引用计数，来保持内存中的对象，所有对象都有引用计数。</p>
+<p>(1) 引用计数增加：</p>
+<ol>
+<li>一个对象分配一个新名称</li>
+<li>将其放入一个容器中(列表、元素或字典)</li>
+</ol>
+<p>(2) 引用减少的情况</p>
+<ol>
+<li>使用del语句将对象的别名显式的销毁</li>
+<li>引用被重新赋值<br>获取应用对象：<br>通过sys.getrefcount( )函数获取某个引用的引用数，函数参数实际上创建了一个临时的引用。因此，getrefcount( )所得到的结果，会比期望多1。</li>
+</ol>
+<h3 id="二-垃圾回收"><a href="#二-垃圾回收" class="headerlink" title="二.垃圾回收"></a>二.垃圾回收</h3><ol>
+<li>当一个对象的引用计数归零时，它将被垃圾回收机制处理掉</li>
+<li>python的自动垃圾回收：当分配对象的次数和取消分配对象的次数的差值高于某个阈值时，垃圾回收才会启动。</li>
+</ol>
+<p>分代回收</p>
+<p><strong>python分代回收基本策略：</strong>存活时间越久的对象，越不可能在后面的程序中变成垃圾。(在垃圾回收的过程中，减少“长寿”对象的扫描频率)。<br>\1. Python将所有的对象分为0, 1, 2三代。所有新建的对象都是0代对象。2. 当某一代对象经历过垃圾回收，依然存活，那么它就被归入下一代对象。<br>\3. 每次垃圾回收启动时，一定会扫描所有0代对象。如果0代对象经过一定次数 垃圾回收，那么就会启动0代和1代的扫描清理。当1代经历一定次数的垃圾回收后，那么会启动对0，1，2，即对所有对象进行扫描。<br>\4. 对于函数set_threshold()，返回(700, 10, 10)，700为分配对象和取消分配对象的差值，当差值大于700时，启动垃圾回收；每10次0代垃圾回收，会配合1次1代的垃圾回收；每10次1代垃圾回收，会配合1次2代的垃圾回收。</p>
+<h3 id="三-内存池机制"><a href="#三-内存池机制" class="headerlink" title="三. 内存池机制"></a>三. 内存池机制</h3><p>Python的内存垃圾回收机制，<strong>将不用的内存放到内存池</strong>而不是返回给操作系统。<br>\1. Pymalloc机制。为了加速Python的执行效率，Python引入内存池机制，用于管理对小块内存的管理和释放。<br>\2. 对于所有小于256个字节的对象都使用pymalloc实现的分配器；而大于这个长度的对象则使用系统的malloc。<br>\3. 对于Python对象，如整数、浮点数和List，都有其独立的私有内存池，对象间不共享他们的内存池。如果你分配又释放了大量的整数，用于缓存这些整数的内存不能再分配给浮点数。</p>
+<p>好了 ,我要去准备圣诞礼物了   哈哈</p>
+<p><img src alt="https://www.vcg.com/sets/515335898"></p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月22日 16:00</p>
+        <p>原始链接： <a class="post-url" href="/2015/12/23/My-blog-05/" title="Python的内存管理(毛毛随笔)">http://yoursite.com/2015/12/23/My-blog-05/</a></p>
+        <footer>
+            <a href="http://yoursite.com">
+                <img src="/images/logo.png" alt="John Doe">
+                John Doe
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2015/12/23/My-blog-05/&title=《Python的内存管理(毛毛随笔)》 — Hexo&pic=http://yoursite.comimages/logo.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2015/12/23/My-blog-05/&title=《Python的内存管理(毛毛随笔)》 — Hexo&source=" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2015/12/23/My-blog-05/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Python的内存管理(毛毛随笔)》 — Hexo&url=http://yoursite.com/2015/12/23/My-blog-05/&via=http://yoursite.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2015/12/23/My-blog-05/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2015/12/23/My-blog-05/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一-对象的引用机制"><span class="post-toc-text">一 对象的引用机制</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二-垃圾回收"><span class="post-toc-text">二.垃圾回收</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三-内存池机制"><span class="post-toc-text">三. 内存池机制</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2016/01/18/My-blog-07/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          Python的循环引用解决方案
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2015/12/08/My-blog-04/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Python列表和元组的详细区别</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 John Doe<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://yoursite.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            
+        </div>
+        <div id="sidebar-menu-box-tags">
+            
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

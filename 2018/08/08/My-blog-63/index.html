@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>微服务和RPC框架 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Blog">
+  
+  <meta name="description" content="一般情况下，业务应用我们都会采用模块化的分层式架构，所有的业务逻辑代码最终会在一个代码库中并统一部署，我们称这种应用架构为单体应用。 单体应用的问题是，全部开发人员会共享一个代码库，不同模块的边界模糊，实现高内聚、松耦合极其困难。 肯定大家会碰到过这类场景，当尝试去重构改进代码时，改了一个地方好几个其他模块也需要同步改动， 当初划分的模块边界轻易被穿透，有人给这种应用的架构起了一个很形象的名字叫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务和RPC框架">
+<meta property="og:url" content="http://yoursite.com/2018/08/08/My-blog-63/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一般情况下，业务应用我们都会采用模块化的分层式架构，所有的业务逻辑代码最终会在一个代码库中并统一部署，我们称这种应用架构为单体应用。 单体应用的问题是，全部开发人员会共享一个代码库，不同模块的边界模糊，实现高内聚、松耦合极其困难。 肯定大家会碰到过这类场景，当尝试去重构改进代码时，改了一个地方好几个其他模块也需要同步改动， 当初划分的模块边界轻易被穿透，有人给这种应用的架构起了一个很形象的名字叫">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2018/08/08/My-blog-63/img/wei1.png">
+<meta property="og:updated_time" content="2019-10-22T12:50:29.775Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微服务和RPC框架">
+<meta name="twitter:description" content="一般情况下，业务应用我们都会采用模块化的分层式架构，所有的业务逻辑代码最终会在一个代码库中并统一部署，我们称这种应用架构为单体应用。 单体应用的问题是，全部开发人员会共享一个代码库，不同模块的边界模糊，实现高内聚、松耦合极其困难。 肯定大家会碰到过这类场景，当尝试去重构改进代码时，改了一个地方好几个其他模块也需要同步改动， 当初划分的模块边界轻易被穿透，有人给这种应用的架构起了一个很形象的名字叫">
+<meta name="twitter:image" content="http://yoursite.com/2018/08/08/My-blog-63/img/wei1.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Caleb的技术博客</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Caleb的技术博客
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个专注 WEB 开发的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="MinHow" target="_blank" href="//minhow.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/wongminho">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/WongMinHo">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/huangminhow">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-My-blog-63" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      微服务和RPC框架
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2018-08-08
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>一般情况下，业务应用我们都会采用模块化的分层式架构，所有的业务逻辑代码最终会在一个代码库中并统一部署，我们称这种应用架构为单体应用。 单体应用的问题是，全部开发人员会共享一个代码库，不同模块的边界模糊，实现高内聚、松耦合极其困难。 肯定大家会碰到过这类场景，当尝试去重构改进代码时，改了一个地方好几个其他模块也需要同步改动， 当初划分的模块边界轻易被穿透，有人给这种应用的架构起了一个很形象的名字叫 “洋葱架构”。</p>
+<p>特点：</p>
+<p>1、服务注册、服务发现、健康检查</p>
+<p>如果我们采用进程内LB方案，那么服务自注册一般统一做在服务器端框架中，健康检查逻辑由具体业务服务定制，框架层提供调用健康检查逻辑的机制，服务发现和负载均衡则集成在服务客户端框架中。</p>
+<p>2、RPC/REST和序列化</p>
+<p>框架层要支持将业务逻辑以HTTP/REST或者RPC方式暴露出来，HTTP/REST是当前主流API暴露方式，在性能要求高的场合则可采用Binary/RPC方式。针对当前多样化的设备类型(浏览器、普通PC、无线设备等)，框架层要支持可定制的序列化机制，例如，对浏览器，框架支持输出Ajax友好的JSON消息格式，而对无线设备上的Native App，框架支持输出性能高的Binary消息格式。</p>
+<p>3、管理接口</p>
+<p>框架集成管理接口，一方面可以在线查看框架和服务内部状态，同时还可以动态调整内部状态，对调试、监控和管理能提供快速反馈。Spring Boot微框架的Actuator模块就是一个强大的管理接口。对于框架层和服务的内部异常，如果框架层能够统一处理并记录日志，对服务监控和快速问题定位有很大帮助。</p>
+<p>4、安全控制</p>
+<p>安全和访问控制逻辑可以在框架层统一进行封装，可做成插件形式，具体业务服务根据需要加载相关安全插件。</p>
+<p>5、配置管理</p>
+<p>除了支持普通配置文件方式的配置，框架层还可集成动态运行时配置，能够在运行时针对不同环境动态调整服务的参数和配置。</p>
+<p>6、监控日志</p>
+<p>框架一方面要记录重要的框架层日志、服务调用链数据，还要将日志、调用链数据等接口暴露出来，让业务层能根据需要记录业务日志数据。在运行环境中，所有日志数据一般由日志系统做进一步分析和处理。</p>
+<p>7、统一错误处理</p>
+<p>对于框架层和服务的内部异常，如果框架层能够统一处理并记录日志，对服务监控和快速问题定位有很大帮助。</p>
+<p>8、流控和容错</p>
+<p>框架集成限流容错组件，能够在运行时自动限流和容错，保护服务，如果进一步和动态配置相结合，还可以实现动态限流和熔断。</p>
+<h1 id="RPC框架"><a href="#RPC框架" class="headerlink" title="RPC框架"></a>RPC框架</h1><p>RPC=Remote Produce Call 是一种技术的概念名词. HTTP是一种协议,RPC可以通过HTTP来实现,也可以通过Socket自己实现一套协议来实现.所以楼主可以换一个问法,为何RPC还有除HTTP 之外的实现法,有何必要.毕竟除了HTTP实现外,私有协议不具备通用性.那么我想唯一的答案就在于HTTP不能满足其业务场景的地方,所以这个就要具体 案例具体分析了.</p>
+<p>http接口是在接口不多、系统与系统交互较少的情况下，解决信息孤岛初期常使用的一种通信手段；优点就是简单、直接、开发方便。利用现成的http协议 进行传输。但是如果是一个大型的网站，内部子系统较多、接口非常多的情况下，RPC框架的好处就显示出来了，首先就是长链接，不必每次通信都要像http 一样去3次握手什么的，减少了网络开销；其次就是RPC框架一般都有注册中心，有丰富的监控管理；发布、下线接口、动态扩展等，对调用方来说是无感知、统 一化的操作。第三个来说就是安全性。最后就是最近流行的服务化架构、服务化治理，RPC框架是一个强力的支撑</p>
+<p>RPC是一个软件结构概念，是构建分布式应用的理论基础。就好比为啥你家可以用到发电厂发出来的电？是因为电是可以传输的。至于用铜线还是用铁丝还是其他 种类的导线，也就是用http还是用其他协议的问题了。这个要看什么场景，对性能要求怎么样。比如在java中的最基本的就是RMI技术，它是java原 生的应用层分布式技术。我们可以肯定的是在传输性能方面，RMI的性能是优于HTTP的。那为啥很少用到这个技术？那是因为用这个有很多局限性，首先它要 保证传输的两端都要要用java实现，且两边需要有相同的对象类型和代理接口，不需要容器，但是加大了编程的难度，在应用内部的各个子系统之间还是会看到 他的身影，比如EJB就是基于rmi技术的。这就与目前的bs架构的软件大相径庭。用http必须要服务端位于http容器里面，这样减少了网络传输方面 的开发，只需要关注业务开发即可。所以在架构一个软件的时候，不能一定根据需求选定技术。</p>
+<h1 id="Thrift"><a href="#Thrift" class="headerlink" title="Thrift"></a>Thrift</h1><p>Thrift实际上是实现了C/S模式，通过代码生成工具将接口定义文件生成服务器端和客户端代码（可以为不同语言），从而实现服务端和客户端跨语言的支持。用户在Thirft描述文件中声明自己的服务，这些服务经过编译后会生成相应语言的代码文件，然后用户实现服务（客户端调用服务，服务器端提服务）便可以了。其中protocol（协议层, 定义数据传输格式，可以为二进制或者XML等）和transport（传输层，定义数据传输方式，可以为TCP/IP传输，内存共享或者文件共享等）被用作运行时库。</p>
+<p>Thrift最初由facebook开发，07年四月开放源码，08年5月进入apache孵化器。</p>
+<p>Apache Thrift 是一款跨语言的服务框架，传输数据采用二进制格式，相对 XML 和 JSON 体积更小，对于高并发、大数据量和多语言的环境更有优势。</p>
+<p><img src="img/wei1.png" alt="img"></p>
+<p>数据类型</p>
+<p>Thrift 支持 8 种数据类型：</p>
+<p>bool: true or false</p>
+<p>byte: signed byte</p>
+<p>i16/i32/i64: 16/32/64位 signed integer</p>
+<p>double: 64位</p>
+<p>binary: byte array</p>
+<p>string</p>
+<p>3 种容器：</p>
+<p>list: 排序数组，可以重复</p>
+<p>set: 集合，每个元素唯一</p>
+<p>map: t1 唯一</p>
+<h1 id="什么是Thrift"><a href="#什么是Thrift" class="headerlink" title="什么是Thrift"></a>什么是Thrift</h1><p>Thrift是一种接口描述语言和二进制通讯协议，它被用来定义和创建跨语言的服务，这是维基百科的描述。简单来说就是你可以按照Thrift定义语法编写.thrift,然后用Thrift命令行生成各种语言的代码，比如OC、Java、C++、JS，调用这些代码就可以完成客户端与服务器的通信了，不需要自己去写网络请求、数据解析等接口。更多详情可以通过这里了解。</p>
+<h1 id="为什么使用Thrift"><a href="#为什么使用Thrift" class="headerlink" title="为什么使用Thrift"></a>为什么使用Thrift</h1><p>在实际项目中主要考虑到这两个优点：</p>
+<p>RPC。通过简单定义Thrift描述语言文件，使用Thrift -gen命令可以生成多种语言的代码，这些代码包含了网络通信,数据编解码的功能。这就免去了前后台编写这部分繁琐的代码，同时也统一了前后台的实现逻辑。</p>
+<p>Thrift的二进制数据的编码比json更加紧凑、减少了无用的数据的传输。这也是本文讨论的重点。</p>
+<h1 id="ThriftPy2是Apache-Thrift-的纯-python-实现"><a href="#ThriftPy2是Apache-Thrift-的纯-python-实现" class="headerlink" title="ThriftPy2是Apache Thrift 的纯 python 实现"></a>ThriftPy2是Apache Thrift 的纯 python 实现</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install thriftpy2</span><br></pre></td></tr></table></figure>
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月22日 20:50</p>
+        <p>原始链接： <a class="post-url" href="/2018/08/08/My-blog-63/" title="微服务和RPC框架">http://yoursite.com/2018/08/08/My-blog-63/</a></p>
+        <footer>
+            <a href="http://yoursite.com">
+                <img src="/images/logo.png" alt="John Doe">
+                John Doe
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/08/08/My-blog-63/&title=《微服务和RPC框架》 — Hexo&pic=http://yoursite.comimages/logo.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/08/08/My-blog-63/&title=《微服务和RPC框架》 — Hexo&source=" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/08/08/My-blog-63/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《微服务和RPC框架》 — Hexo&url=http://yoursite.com/2018/08/08/My-blog-63/&via=http://yoursite.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/08/08/My-blog-63/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2018/08/08/My-blog-63/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#RPC框架"><span class="post-toc-text">RPC框架</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Thrift"><span class="post-toc-text">Thrift</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#什么是Thrift"><span class="post-toc-text">什么是Thrift</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#为什么使用Thrift"><span class="post-toc-text">为什么使用Thrift</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#ThriftPy2是Apache-Thrift-的纯-python-实现"><span class="post-toc-text">ThriftPy2是Apache Thrift 的纯 python 实现</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2018/09/19/My-blog-64/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          Git相关知识
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2018/07/15/My-blog-62/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">同源策略</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 John Doe<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://yoursite.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            
+        </div>
+        <div id="sidebar-menu-box-tags">
+            
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

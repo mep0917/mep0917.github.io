@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>同源策略 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Blog">
+  
+  <meta name="description" content="什么是同源策略：同源策略是禁止javascript进行跨域访问的安全策略，他是浏览器的沙盒环境所提供的一项制约。  什么是相同源：源是一个由&amp;lt;协议，主机，端口&amp;gt;构成的三元组，而两个相同源需要这个三元组的所有属性都相同。  同源策略的好处：限制一个源的脚本从另外一个源加载资源的行为，在对恶意脚本的防护上起到巨大的作用。ps：需要注意的是，同源策略不是禁止脚本的执行，而是禁止读取HTTP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="同源策略">
+<meta property="og:url" content="http://yoursite.com/2018/07/15/My-blog-62/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="什么是同源策略：同源策略是禁止javascript进行跨域访问的安全策略，他是浏览器的沙盒环境所提供的一项制约。  什么是相同源：源是一个由&amp;lt;协议，主机，端口&amp;gt;构成的三元组，而两个相同源需要这个三元组的所有属性都相同。  同源策略的好处：限制一个源的脚本从另外一个源加载资源的行为，在对恶意脚本的防护上起到巨大的作用。ps：需要注意的是，同源策略不是禁止脚本的执行，而是禁止读取HTTP">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-22T12:49:38.962Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="同源策略">
+<meta name="twitter:description" content="什么是同源策略：同源策略是禁止javascript进行跨域访问的安全策略，他是浏览器的沙盒环境所提供的一项制约。  什么是相同源：源是一个由&amp;lt;协议，主机，端口&amp;gt;构成的三元组，而两个相同源需要这个三元组的所有属性都相同。  同源策略的好处：限制一个源的脚本从另外一个源加载资源的行为，在对恶意脚本的防护上起到巨大的作用。ps：需要注意的是，同源策略不是禁止脚本的执行，而是禁止读取HTTP">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Caleb的技术博客</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Caleb的技术博客
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个专注 WEB 开发的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="MinHow" target="_blank" href="//minhow.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/wongminho">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/WongMinHo">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/huangminhow">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-My-blog-62" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      同源策略
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2018-07-15
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <ul>
+<li><p>什么是同源策略：同源策略是禁止javascript进行跨域访问的安全策略，他是浏览器的沙盒环境所提供的一项制约。</p>
+</li>
+<li><p>什么是相同源：源是一个由&lt;协议，主机，端口&gt;构成的三元组，而两个相同源需要这个三元组的所有属性都相同。</p>
+</li>
+<li><p>同源策略的好处：限制一个源的脚本从另外一个源加载资源的行为，在对恶意脚本的防护上起到巨大的作用。ps：需要注意的是，同源策略不是禁止脚本的执行，而是禁止读取HTTP的响应。也就是跨域的资源访问请求是允许的，但是服务端返回的数据是禁止读取的。</p>
+</li>
+<li><p>虽然同源策略对恶意脚本的防护是必要的，但是当我们需要合理的跨域资源访问时，要如何实现：</p>
+<ul>
+<li>JSONP跨域请求：这不是重点，所以略过。</li>
+<li>CORS跨域请求：</li>
+</ul>
+<p>1、CORS 的全称是cross-origin sharing stander，跨域资源共享标准</p>
+<p>左侧的Origin字段表示的是请求页面所在的域。<br>右侧Access-Control-Allow-Origin是响应头，用于标识允许请求的域。只有当左侧的请求域属于右侧字段定义的域的子域才能进行跨域通信。</p>
+<p>此时根据上课的大佬解释，存在CORS漏洞，可以获取到敏感信息，具体自己去看视频吧，菜鸡就不解释了：<a href="https://www.bilibili.com/video/av38650052?t=120" target="_blank" rel="noopener">https://www.bilibili.com/video/av38650052?t=120</a> &lt;b站漏洞银行咖面&gt;<br>小声bb：有点跑题，以后一定要再写一篇博客。</p>
+<p>3、这个标准允许在以下的几个场景中发起跨域请求：</p>
+<p>由XMLHttpRequest或Fetch等发起的跨域请求；<br>Web 字体，通过 @font-face 进行跨域调用；<br>WebGL 贴图；<br>使用 drawImage 将 Images/video 画面绘制到 canvas；<br>样式表（使用 CSSOM）；<br>scripts；<br>1<br>2<br>3<br>4<br>5<br>6<br>4、CORS进阶：菜鸡已经写不清楚了，所以就转一个大佬的博客吧【菜哭】</p>
+<p>CORS通过一些特殊的 HTTP 头来确保哪些源站可以请求哪些资源，除此之外，如果这个请求会对服务器的数据产生修改的可能（这个说法并不是很准确，后面会详细阐述），将会在跨域之前发起一个preflight请求进行检查，如果检查不通过，那么不会发起跨域请求。</p>
+<p>首先要明确一点，并不是所有的请求都会触发preflight机制，这些不会触发preflight的请求被称为simple request。<br>符合下列条件的请求，将不会触发preflight机制并视为simple request：</p>
+<p>GET 请求<br>HEAD 请求<br>Content-Type 为指定值的 POST 请求，包括text/plain，multipart/form-data以及application/x-www-form-urlencode<br>HTTP 首部字段不能包含下列以外的值：<br>Accept<br>Accept-Language<br>Content-Language<br>Content-Type<br>DPR<br>Downlink<br>Save-Data<br>Viewport-Width<br>Width<br>凡是不满足上述条件的请求，将被视为preflight request，并在发起跨域请求前，预先发起一个OPTIONS请求进行检查。在preflight request的返回头中，会包含一些关于是否允许发起跨域的信息。例如我们看这个preflight的例子，这个是向一个地址 POST XML 内容的请求：</p>
+</li>
+</ul>
+<p>  在OPTIONS请求中，发出了两个特殊的 HTTP 头，分别是Access-Control-Request-Method和Access-Control-Request-Headers，意思是告诉服务端，我接下来的请求中，会使用POST方法，并且会携带两个自定义的头部字段X-TEST和Content-Type（因为Content-Type的内容并非是我们上文中提到的三种之一，所以被看做是自定义头部）。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月22日 20:49</p>
+        <p>原始链接： <a class="post-url" href="/2018/07/15/My-blog-62/" title="同源策略">http://yoursite.com/2018/07/15/My-blog-62/</a></p>
+        <footer>
+            <a href="http://yoursite.com">
+                <img src="/images/logo.png" alt="John Doe">
+                John Doe
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/07/15/My-blog-62/&title=《同源策略》 — Hexo&pic=http://yoursite.comimages/logo.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/07/15/My-blog-62/&title=《同源策略》 — Hexo&source=" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/07/15/My-blog-62/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《同源策略》 — Hexo&url=http://yoursite.com/2018/07/15/My-blog-62/&via=http://yoursite.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/07/15/My-blog-62/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2018/07/15/My-blog-62/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2018/08/08/My-blog-63/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          微服务和RPC框架
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2018/06/20/My-blog-61/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">最近整理的一些有意思的</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 John Doe<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://yoursite.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            
+        </div>
+        <div id="sidebar-menu-box-tags">
+            
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

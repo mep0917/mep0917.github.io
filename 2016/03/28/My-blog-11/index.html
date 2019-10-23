@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>HTTP、 HTTP1.1、 HTTP/2的区别 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Blog">
+  
+  <meta name="description" content="1、什么是HTTP/2？HTTP/2 是 HTTP 协议的第二个主要版本，为什么HTTP/2不叫HTTP2.0，是因为标准委员会不在打算发布子版本了，下一个版本将是HTTP/3了。该版本注重性能，致力于减少延迟时间，以提高页面的响应速度为准则。HTTP/2 相比HTTP1.X更简单,高效,强大,在传输层解决了之前使用HTTP1.x中的问题，HTTP/2 是基于 SPDY 协议的，可以打开一个TCP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP、 HTTP1.1、 HTTP&#x2F;2的区别">
+<meta property="og:url" content="http://yoursite.com/2016/03/28/My-blog-11/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1、什么是HTTP/2？HTTP/2 是 HTTP 协议的第二个主要版本，为什么HTTP/2不叫HTTP2.0，是因为标准委员会不在打算发布子版本了，下一个版本将是HTTP/3了。该版本注重性能，致力于减少延迟时间，以提高页面的响应速度为准则。HTTP/2 相比HTTP1.X更简单,高效,强大,在传输层解决了之前使用HTTP1.x中的问题，HTTP/2 是基于 SPDY 协议的，可以打开一个TCP">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-22T11:33:38.031Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTP、 HTTP1.1、 HTTP&#x2F;2的区别">
+<meta name="twitter:description" content="1、什么是HTTP/2？HTTP/2 是 HTTP 协议的第二个主要版本，为什么HTTP/2不叫HTTP2.0，是因为标准委员会不在打算发布子版本了，下一个版本将是HTTP/3了。该版本注重性能，致力于减少延迟时间，以提高页面的响应速度为准则。HTTP/2 相比HTTP1.X更简单,高效,强大,在传输层解决了之前使用HTTP1.x中的问题，HTTP/2 是基于 SPDY 协议的，可以打开一个TCP">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Caleb的技术博客</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Caleb的技术博客
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        一个专注 WEB 开发的技术博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="MinHow" target="_blank" href="//minhow.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/wongminho">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" target="_blank" href="//weibo.com/WongMinHo">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/huangminhow">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-My-blog-11" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      HTTP、 HTTP1.1、 HTTP/2的区别
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2016-03-28
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>1、什么是HTTP/2？<br>HTTP/2 是 HTTP 协议的第二个主要版本，为什么HTTP/2不叫HTTP2.0，是因为标准委员会不在打算发布子版本了，下一个版本将是HTTP/3了。该版本注重性能，致力于减少延迟时间，以提高页面的响应速度为准则。HTTP/2 相比HTTP1.X更简单,高效,强大,在传输层解决了之前使用HTTP1.x中的问题，HTTP/2 是基于 SPDY 协议的，可以打开一个TCP连接并且重复使用，响应多路复用，而且也支持压缩头部减少头部的体积，添加请求优先级，服务端推送。在HTTP/2中为了支持这些特性，增加了大量的头部字段来支持。HTTP/2并没有更改HTTP的语法，而是通过客户端和服务端传输的数据格式，通过新的二进制帧层控制整个过程。</p>
+<p>2、HTTP1.x对比HTTP/2，主要区别有哪些？<br>HTTP/2新的二级制格式而非文本格式<br>HTTP/2是完全多路复用，只需要一个TCP连接就可以实现并行，而非有序并阻塞的<br>使用header压缩，HTTP/2降低了请求成本<br>服务端推送，服务端可以主动把响应主动push到客户端<br>3、HTTP/2新特性总结<br>头部压缩<br>每个HTTP传输都包括了请求的一系列资源和描述以及属性的标题。在HTTP/2之前是使用纯文本的形式发送，每次的开销要增加500-800字节，如果使用了HTTP Cookie会增加上千字节，在HTTP/2中，使用了HPACK压缩Header以及响应数据。<br>压缩元数据：<br>它允许通过静态霍夫曼编码对传输的头部字段进行编码，从而减少它们各自的传输大小。<br>它要求客户端和服务器都维护和更新先前看到的标题字段的索引列表（即，建立共享压缩上下文），然后将其用作参考以高效编码先前传输的值。<br>示意图如下图</p>
+<p>二进制帧层<br>HTTP1.x是基于解析文本，基于文本的协议格式存在天然的缺陷，表现的形式比较多样化，要做到很健全的场景很难，但是二进制就不同。HTTP/2性能提升的核心在于二进制的帧层，它是指HTTP的消息怎么在客户端以及服务端如何进行封装及传输。<br>它是接口传输过程中的一种更加轻便、更改的编码机制，新的API提供给我们了应用。HTTP1.x采用的是换行分隔符的形式，HTTP/2是采用的分割消息以及frame，然后每个消息以及frame进行编码。客户端和服务端进行统一规则，统一的编码解码，从而一直的处理这些消息的发送及接收，要注意的的是HTTP1.x和HTTP/2是不同通信的。<br>请求和响应多路复用<br>连接共享，在HTTP1.x，用户想要多个请求并行必须使用多个TCP连接，而且在一个时间点只能有一个请求发送出去，使得队头阻塞、低效，只能一个过程完成才能发送下一个。在HTTP/2中，新的帧层接触了对头阻塞限制使得所有请求和响应多路复用，允许客户端和服务端把消息分解成独立的帧，交错传输，然后在另个一个端组装。<br>过程中，每一个请求都做连接机制，一个请求对应一个id，这样一个TCP连接上可以有多个请求，这些请求可以混杂在一起，接收方根据id进行分类归属到不同的服务端的请求中。<br>服务端推送<br>HTTP/2的另一个强大的新功能是服务器为单个客户端请求发送多个响应的能力。也就是说，除了对原始请求的响应之外，服务器还可以向客户端推送额外的资源，而不需要客户端明确请求每一个资源！</p>
+<p>HTTP / 2脱离了严格的请求 - 响应语义，并支持一对多和服务器启动的推送工作流程，在浏览器内部和外部打开全新的交互可能性。这是一个启动功能，对于我们如何考虑协议以及在何处以及如何使用协议，都会产生重要的长期影响。<br>服务端推送的优势</p>
+<p>推送的资源可以在不同的页面上使用<br>推送的资源可以复用，和其他资源一起使用<br>推送的资源根据用户的意愿，可以拒绝<br>推送的资源可以在客户端缓存<br>推送的资源服务端优先<br>减少重复请求，极大提升响应速度<br>4、多路复用和长连接复用的区别？<br>HTTP1.x 请求&lt;==&gt;响应，每次都要建立一个连接，过程完成自动关闭，比较浪费资源。<br>HTTP/2多个请求可以在一个连接上完成，每个请求都有一个id作为唯一的标识，其中某个请求比较耗时的情况下，不会影响后续请求过程。<br>HTTP1.1若干个请求是串行的单线程处理，后面的请求需要等待前面的请求完成以后才可以继续执行，一旦其中被阻塞，那么就会阻塞后面的请求。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月22日 19:33</p>
+        <p>原始链接： <a class="post-url" href="/2016/03/28/My-blog-11/" title="HTTP、 HTTP1.1、 HTTP/2的区别">http://yoursite.com/2016/03/28/My-blog-11/</a></p>
+        <footer>
+            <a href="http://yoursite.com">
+                <img src="/images/logo.png" alt="John Doe">
+                John Doe
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2016/03/28/My-blog-11/&title=《HTTP、 HTTP1.1、 HTTP/2的区别》 — Hexo&pic=http://yoursite.comimages/logo.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2016/03/28/My-blog-11/&title=《HTTP、 HTTP1.1、 HTTP/2的区别》 — Hexo&source=" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2016/03/28/My-blog-11/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《HTTP、 HTTP1.1、 HTTP/2的区别》 — Hexo&url=http://yoursite.com/2016/03/28/My-blog-11/&via=http://yoursite.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2016/03/28/My-blog-11/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://yoursite.com/2016/03/28/My-blog-11/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2016/04/02/My-blog-12/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          python垃圾回收机制以及循环引用问题
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2016/03/11/My-blog-10/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Python中的比较运算符和逻辑运算符</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 John Doe<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://yoursite.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            
+        </div>
+        <div id="sidebar-menu-box-tags">
+            
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
